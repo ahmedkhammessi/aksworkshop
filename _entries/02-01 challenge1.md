@@ -11,27 +11,9 @@ Azure has a managed Kubernetes service, AKS (Azure Kubernetes Service), we'll us
 
 #### Get the latest Kubernetes version available in AKS
 
-{% collapsible %}
-
-Get the latest available Kubernetes version in your preferred region into a bash variable. Replace `<region>` with the region of your choosing, for example `eastus`.
-
-```sh
-version=$(az aks get-versions -l <region> --query 'orchestrators[-1].orchestratorVersion' -o tsv)
-```
-
-{% endcollapsible %}
-
 #### Create a Resource Group
 
 > **Note** You don't need to create a resource group if you're using the lab environment. You can use the resource group created for you as part of the lab. To retrieve the resource group name in the managed lab environment, run `az group list`.
-
-{% collapsible %}
-
-```sh
-az group create --name <resource-group> --location <region>
-```
-
-{% endcollapsible %}
 
 #### Create the AKS cluster
 
@@ -44,20 +26,6 @@ az group create --name <resource-group> --location <region>
 ##### **Option 1:** Create an AKS cluster without the cluster autoscaler (recommended)
 
 > **Note** If you're using the provided lab environment, you'll not be able to create the Log Analytics workspace required to enable monitoring while creating the cluster from the Azure Portal unless you manually create the workspace in your assigned resource group. Additionally, if you're running this on an Azure Pass, please add `--load-balancer-sku basic` to the flags, as the Azure Pass only supports the basic Azure Load Balancer.
-
-  {% collapsible %}
-
-  Create AKS using the latest version
-
-  ```sh
-  az aks create --resource-group <resource-group> \
-    --name <unique-aks-cluster-name> \
-    --location <region> \
-    --kubernetes-version $version \
-    --generate-ssh-keys
-  ```
-
-  {% endcollapsible %}
 
 ##### **Option 2 ** Create an AKS cluster with the cluster autoscaler
 
